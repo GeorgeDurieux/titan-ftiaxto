@@ -1,0 +1,588 @@
+/*
+|--------------------------------------------------------------------------
+| FTIAXTO brochure
+|--------------------------------------------------------------------------
+| The packaging is the design language. Three devices are borrowed from it and
+| used consistently:
+|
+|   the diagonal green band   cut across the hero, at the angle of the bag top
+|   the rule-flanked label    `---- R3 STRUCTURAL ----`, the product's own mark,
+|                             reused as the eyebrow of every section
+|   the printed spec panel    hairline rules, label left, value right, no zebra
+|
+| Colour is restricted to the three Pantones on the artwork plus white, black
+| and grey. RED IS RESERVED FOR THE SAFETY BLOCK. It is the hazard colour on the
+| bag, so spending it on a button or a hover would make a warning look like
+| decoration.
+*/
+
+:root {
+  --navy:   #162a75;
+  --green:  #71bf43;
+  --red:    #d72c20;
+
+  --navy-ink:  #0f1e55;   /* darker navy, for long body text on white */
+  --navy-wash: #f2f4fb;   /* navy at a whisper, for panel fills */
+
+  --gray-050: #f6f7f9;
+  --gray-150: #e6e8ec;
+  --gray-400: #9aa1ad;
+  --gray-650: #5a6270;
+
+  --display: 'Archivo Black', 'Arial Black', system-ui, sans-serif;
+  --body:    'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, monospace;
+
+  --page:   1140px;
+  --gutter: clamp(20px, 5vw, 56px);
+
+  /* The bag's band angle. Every diagonal on the page uses this one value. */
+  --band-angle: 6deg;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--navy-ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+| `height: auto` is not cosmetic. The `width` and `height` attributes on an
+| `<img>` are presentational hints, so setting only `width` in CSS left the
+| attribute's height in force and every sized image stretched vertically: the
+| wordmark and the pack photo were both about twice as tall as they should be.
+| The attributes stay, they reserve the right space before the image loads.
+*/
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--navy); }
+
+:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------- layout */
+
+.wrap {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: clamp(56px, 8vw, 104px); }
+.section--tint { background: var(--gray-050); }
+
+.section__head { max-width: 62ch; margin-bottom: clamp(28px, 4vw, 44px); }
+
+/* --------------------------------------------------- the eyebrow device */
+
+/*
+| The bag prints `---- R3 STRUCTURAL ----`: small caps between two hairlines.
+| Reused verbatim as the section marker. The rules are drawn with borders on
+| flex children rather than pseudo-elements so the label can wrap on narrow
+| screens without the rules stacking oddly.
+*/
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 14px;
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.eyebrow::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 0;
+  border-top: 1.5px solid var(--navy);
+  opacity: 0.35;
+}
+
+.eyebrow--onGreen,
+.eyebrow--onGreen::after { color: #fff; border-color: #fff; }
+
+/* ------------------------------------------------------------ typography */
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 400;      /* Archivo Black ships one weight */
+  color: var(--navy);
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h2 { font-size: clamp(28px, 4vw, 42px); }
+h3 { font-size: clamp(19px, 2vw, 22px); letter-spacing: -0.01em; }
+
+.lede {
+  font-size: clamp(18px, 2vw, 21px);
+  line-height: 1.55;
+  color: var(--navy-ink);
+  margin: 18px 0 0;
+  max-width: 58ch;
+}
+
+.prose { max-width: 62ch; color: var(--gray-650); }
+
+.data { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* ----------------------------------------------------------------- topbar */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px var(--gutter);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--gray-150);
+}
+
+.topbar__logo { height: 30px; width: auto; }
+
+.topbar__product {
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray-650);
+}
+
+/* ------------------------------------------------------------------- hero */
+
+/*
+| THE SIGNATURE. The green field from the top of the bag, cut off on the
+| diagonal, with the pack photo crossing the cut.
+|
+| The cut is a `clip-path` on a real block rather than a rotated decoration
+| behind everything. The first attempt rotated an absolutely positioned strip,
+| which left the white claim text sitting on white page and invisible: the copy
+| had no idea where the band had ended up. Now the band OWNS its content, so
+| white on green is guaranteed.
+*/
+.hero { background: #fff; }
+
+.hero__band {
+  background: var(--green);
+  padding-block: clamp(30px, 5vw, 52px) clamp(74px, 10vw, 128px);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - clamp(30px, 4vw, 58px)));
+}
+
+.hero__bandInner { display: grid; gap: clamp(16px, 2vw, 24px); }
+
+.hero__promise {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(34px, 6vw, 62px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.hero__promise span {
+  font-family: var(--body);
+  font-size: clamp(14px, 1.6vw, 18px);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/*
+| The two halves of the mix. On the bag the first sits on a navy rounded panel
+| and the second on the green, so the navy one is marked and the other inherits
+| the band.
+*/
+.hero__blend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero__blend li {
+  padding: 12px 20px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.hero__blend li.is-navy {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+
+.hero__blend strong {
+  display: block;
+  font-size: clamp(14px, 1.5vw, 16px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero__blend em {
+  font-style: normal;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(20px, 4vw, 56px);
+  align-items: start;
+}
+
+/*
+| Pulls the pack up across the diagonal cut. `position` and `z-index` are not
+| optional: a non-none `clip-path` makes the band a stacking context, and
+| without them the band painted over the top of the bag.
+*/
+.hero__pack {
+  position: relative;
+  z-index: 1;
+  margin-top: clamp(-260px, -22vw, -120px);
+}
+.hero__pack img { width: clamp(180px, 24vw, 300px); }
+
+.hero__copy { padding-top: clamp(28px, 4vw, 48px); }
+
+.hero__wordmark {
+  width: min(100%, 400px);
+  margin-bottom: 20px;
+}
+
+.hero__copy .lede { margin-top: 0; }
+.hero__copy .actions { margin-top: 26px; }
+
+.hero__standards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: clamp(24px, 3vw, 40px);
+  padding-block: 18px;
+  border-top: 1px solid var(--gray-150);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--gray-650);
+}
+
+/* ------------------------------------------------------------------ CTAs */
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 22px;
+  border: 2px solid var(--navy);
+  border-radius: 4px;
+  background: var(--navy);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover { background: var(--navy-ink); }
+
+.btn--ghost { background: #fff; color: var(--navy); }
+.btn--ghost:hover { background: var(--navy-wash); }
+
+/* --------------------------------------------------------------- features */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: clamp(12px, 2vw, 20px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.features li {
+  padding: 20px 14px;
+  background: #fff;
+  border: 1px solid var(--gray-150);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.features img { width: 84px; margin: 0 auto 10px; }
+
+.features span {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+/* ------------------------------------------------------------------- uses */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+.ticks { margin: 0; padding: 0; list-style: none; }
+
+.ticks li {
+  position: relative;
+  padding: 14px 0 14px 34px;
+  border-bottom: 1px solid var(--gray-150);
+}
+
+.ticks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 21px;
+  width: 16px;
+  height: 16px;
+  background: var(--green);
+  clip-path: polygon(14% 47%, 0 61%, 40% 100%, 100% 20%, 86% 8%, 38% 71%);
+}
+
+/* Ordered because mixing IS a sequence. */
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: step; }
+
+.steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 14px;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--gray-150);
+}
+
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--green);
+}
+
+/* ------------------------------------------------------------------ table */
+
+/*
+| Set like the printed panel on the bag: hairlines, no fills, no zebra. The
+| wrapper scrolls on its own so a wide table never pushes the page sideways.
+*/
+.tablewrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+caption {
+  text-align: left;
+  padding-bottom: 12px;
+  color: var(--gray-650);
+  font-size: 14px;
+}
+
+th, td {
+  padding: 13px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-150);
+  vertical-align: top;
+}
+
+thead th {
+  border-bottom: 2px solid var(--navy);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+tbody th {
+  font-family: var(--display);
+  font-size: 18px;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+tbody th small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--gray-650);
+}
+
+td .muted { color: var(--gray-650); font-size: 14px; }
+
+/* Spec list: two columns of label/value, printed-panel feel. */
+.specs { margin: 0; display: grid; grid-template-columns: 1fr; }
+
+.specs > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  padding-block: 13px;
+  border-bottom: 1px solid var(--gray-150);
+}
+
+.specs dt { color: var(--gray-650); }
+.specs dd { margin: 0; font-family: var(--mono); font-weight: 600; color: var(--navy); }
+
+/* ---------------------------------------------------------------- gallery */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(12px, 2vw, 20px);
+}
+
+.shot {
+  margin: 0;
+  border: 1px solid var(--gray-150);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.shot img { width: 100%; height: 260px; object-fit: contain; background: #fff; }
+
+.shot figcaption {
+  padding: 12px 14px;
+  border-top: 1px solid var(--gray-150);
+  font-size: 14px;
+  color: var(--gray-650);
+}
+
+.shot--todo {
+  display: grid;
+  place-items: center;
+  min-height: 260px;
+  background:
+    repeating-linear-gradient(135deg, var(--gray-050) 0 12px, #fff 12px 24px);
+  color: var(--gray-400);
+  font-family: var(--mono);
+  font-size: 13px;
+  text-align: center;
+  padding: 24px;
+}
+
+/* -------------------------------------------------------------- downloads */
+
+.docs { display: grid; gap: 10px; }
+
+.doc {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--gray-150);
+  border-radius: 6px;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.doc:hover { border-color: var(--navy); background: var(--navy-wash); }
+
+.doc__code {
+  flex: 0 0 auto;
+  min-width: 78px;
+  padding: 5px 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+.doc__title { flex: 1 1 auto; font-weight: 600; color: var(--navy); }
+.doc__hint { flex: 0 0 auto; font-size: 13px; color: var(--gray-400); }
+
+/* ----------------------------------------------------------------- safety */
+
+/*
+| The only red on the page. It carries the hazard, exactly as on the bag.
+*/
+.safety {
+  border-left: 5px solid var(--red);
+  background: #fff;
+  padding: 24px 26px;
+}
+
+.safety h2 { color: var(--red); font-size: clamp(20px, 2.4vw, 26px); }
+
+.safety ul { margin: 14px 0 0; padding-left: 20px; color: var(--navy-ink); }
+.safety li { padding-block: 3px; }
+
+/* ----------------------------------------------------------------- footer */
+
+/* Deliberately not the corporate footer: one line, so the page ends. */
+.footend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  justify-content: space-between;
+  padding: 22px var(--gutter);
+  border-top: 1px solid var(--gray-150);
+  font-size: 13px;
+  color: var(--gray-400);
+}
+
+/* ------------------------------------------------------------ responsive */
+
+@media (max-width: 860px) {
+  .split { grid-template-columns: 1fr; }
+
+  /* The pack moves under the copy and stops overlapping the cut, which has no
+     room to read on a narrow screen. */
+  .hero__grid { grid-template-columns: 1fr; }
+  .hero__pack { margin-top: 0; justify-self: center; }
+  .hero__pack img { width: min(70%, 260px); }
+
+  .specs > div { flex-direction: column; gap: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
