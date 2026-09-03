@@ -1,0 +1,18 @@
+/*
+ * Cloudflare Workers, static assets only.
+ *
+ * There is no Worker script: `assets.directory` alone is enough to serve a
+ * built site. Deployed through Workers rather than Pages because Cloudflare's
+ * own dashboard now labels the Pages workflow as legacy.
+ *
+ * The config file is required here. It would be optional only if the build
+ * used the Cloudflare Vite plugin, which generates one; this project uses
+ * plain Vite.
+ */
+{
+  "name": "titan-ftiaxto",
+  "compatibility_date": "2026-09-03",
+  "assets": {
+    "directory": "./dist"
+  }
+}

@@ -17,18 +17,22 @@ npm run build    # tsc -b && vite build
 
 ## Deploy
 
-Hosted on Cloudflare Pages through the GitHub integration, so a push to `main`
-builds and publishes.
+Hosted on Cloudflare Workers with static assets, connected to this GitHub repo,
+so a push to `main` builds and publishes.
 
 | Setting | Value |
 |---|---|
-| Framework preset | None (or Vite) |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
+| Deploy command | `npx wrangler deploy` |
+| Assets directory | `./dist`, set in `wrangler.jsonc` |
 | Node version | pinned to 22 by `.node-version` |
 
+Workers rather than Pages because Cloudflare's dashboard now labels the Pages
+workflow as legacy. There is no Worker script: `assets.directory` on its own
+serves the built site.
+
 The Node pin matters: Vite 7 needs Node 20.19+ or 22.12+, and without the file
-Pages may pick an older default and the build fails on install.
+the build may pick an older default and fail on install.
 
 ## Where things live
 
