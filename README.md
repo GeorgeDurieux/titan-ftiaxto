@@ -15,6 +15,21 @@ npm run dev      # http://localhost:5180
 npm run build    # tsc -b && vite build
 ```
 
+## Deploy
+
+Hosted on Cloudflare Pages through the GitHub integration, so a push to `main`
+builds and publishes.
+
+| Setting | Value |
+|---|---|
+| Framework preset | None (or Vite) |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Node version | pinned to 22 by `.node-version` |
+
+The Node pin matters: Vite 7 needs Node 20.19+ or 22.12+, and without the file
+Pages may pick an older default and the build fails on install.
+
 ## Where things live
 
 | What | Where |
