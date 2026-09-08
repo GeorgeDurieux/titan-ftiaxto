@@ -17,6 +17,8 @@ npm run build    # tsc -b && vite build
 
 ## Deploy
 
+Live at **https://titan-ftiaxto.com**, `www` included.
+
 Hosted on Cloudflare Workers with static assets, connected to this GitHub repo,
 so a push to `main` builds and publishes.
 
@@ -25,7 +27,33 @@ so a push to `main` builds and publishes.
 | Build command | `npm run build` |
 | Deploy command | `npx wrangler deploy` |
 | Assets directory | `./dist`, set in `wrangler.jsonc` |
+| Production branch | `main` |
 | Node version | pinned to 22 by `.node-version` |
+
+### If a push does not publish
+
+The Cloudflare project can lose its authorisation to the GitHub account while
+keeping every build setting intact. The dashboard then shows "This project is
+disconnected from your Git account" under Settings, Builds, and pushes are
+silently ignored: no build starts and nothing fails, so the site just stays on
+the previous version.
+
+Two ways to tell from outside the dashboard. The commit carries no check run:
+
+```bash
+curl -s https://api.github.com/repos/GeorgeDurieux/titan-ftiaxto/commits/main/check-runs
+```
+
+And the served bundle keeps its old hash, which is the real proof, since all the
+copy is inside the bundle rather than in `index.html`:
+
+```bash
+curl -s https://titan-ftiaxto.com | grep -oE '/assets/index-[A-Za-z0-9_-]+\.js'
+```
+
+Reconnect through Manage next to the repository name. Reconnecting does not
+build anything by itself, so it takes one more push to publish what is already
+on `main`.
 
 Workers rather than Pages because Cloudflare's dashboard now labels the Pages
 workflow as legacy. There is no Worker script: `assets.directory` on its own
