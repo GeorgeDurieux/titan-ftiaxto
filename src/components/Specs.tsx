@@ -16,15 +16,18 @@ const Specs = () => (
         <Eyebrow>Specifications</Eyebrow>
         <h2>Water in, strength out</h2>
         <p className="lede">
-          One bag, two mixes. Less water gives a plastic mix for slabs, beams
-          and columns; more water gives a fluid mix you can pump into heavily
-          reinforced sections.
+          One bag, multiple mixes. Less water gives a plastic mix for slabs,
+          beams and columns; more water gives a fluid mix you can pump into
+          heavily reinforced sections. Even at maximum water dosage, FTIAXTO
+          keeps its structural strength above 50 MPa.
         </p>
       </div>
 
       <div className="tablewrap">
         <table>
-          <caption>Dosage per 25 kg bag, measured at +20°C.</caption>
+          <caption>
+            Dosage per 25 kg bag, at +20°C (nominal reference temperature).
+          </caption>
           <thead>
             <tr>
               {dosage.head.map((h) => (

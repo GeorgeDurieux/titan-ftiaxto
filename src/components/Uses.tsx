@@ -14,7 +14,9 @@ const Uses = () => (
         <h2>Suitable for</h2>
         <ul className="ticks" style={{ marginTop: 24 }}>
           {uses.map((u) => (
-            <li key={u}>{u}</li>
+            <li key={u.lead}>
+              <strong>{u.lead}</strong>, {u.rest}
+            </li>
           ))}
         </ul>
       </div>

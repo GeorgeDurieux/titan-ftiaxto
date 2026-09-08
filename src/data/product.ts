@@ -33,11 +33,27 @@ export const features = [
   { key: 'sustainable',    label: 'Sustainable'     },
 ] as const;
 
+/*
+ * Each use leads with the kind of work, then the examples. The lead is set
+ * apart so the four kinds can be scanned without reading the examples.
+ */
 export const uses = [
-  'Small structural constructions and repairs, such as tie beams and lintels',
-  'Landscaping and garden works, as well as anchoring elements',
-  'Floor coverings and substrates, such as levelling cement screeds',
-  'Special constructions and infrastructure, such as manholes and channels',
+  {
+    lead: 'Small structural constructions and repairs',
+    rest: 'such as tie beams and lintels, and filling voids or defects in existing concrete',
+  },
+  {
+    lead: 'Landscaping and garden works',
+    rest: 'such as anchoring posts, fences and light poles, ramps, pathways and support bases',
+  },
+  {
+    lead: 'Floor coverings and substrates',
+    rest: 'such as levelling cement screeds and forming slopes for proper water drainage',
+  },
+  {
+    lead: 'Special constructions and infrastructure',
+    rest: 'such as manholes, channels and small non-load-bearing foundations',
+  },
 ];
 
 /*
@@ -48,7 +64,7 @@ export const mixing = [
   'Mix the content of the bag with 2 to 3 litres of clean water.',
   'Use a mechanical mixer until the mix is homogenous.',
   'Apply by trowel or by casting, depending on the application.',
-  'Work within about 30 minutes at +20°C, the pot life of the mix.',
+  'Work within about 2H at +20°C, the pot life of the mix.',
 ];
 
 export const dosage = {
