@@ -1,4 +1,4 @@
-import { dosage, specs } from '../data/product';
+import { dosage, labCharacteristics, specs } from '../data/product';
 import Eyebrow from './Eyebrow';
 
 /*
@@ -67,6 +67,33 @@ const Specs = () => (
             </div>
           ))}
         </dl>
+      </div>
+
+      {/* A table rather than the definition list above, because each figure
+          carries the standard it was measured under, and that third column is
+          what separates a measured result from a declared characteristic. */}
+      <div style={{ marginTop: 'clamp(40px, 6vw, 72px)' }}>
+        <Eyebrow>Lab characteristics</Eyebrow>
+        <div className="tablewrap" style={{ marginTop: 24 }}>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Property</th>
+                <th scope="col">Value</th>
+                <th scope="col">Standard</th>
+              </tr>
+            </thead>
+            <tbody>
+              {labCharacteristics.map((row) => (
+                <tr key={row.property}>
+                  <th scope="row">{row.property}</th>
+                  <td className="data">{row.value}</td>
+                  <td className="muted">{row.standard}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>

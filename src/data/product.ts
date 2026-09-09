@@ -20,7 +20,7 @@ export const product = {
   weight: '25 kg',
   origin: 'Produced in Greece, Kamari plant',
   intro:
-    'A ready-to-use dry concrete for structural repairs. Add 1.5 to 2.5 litres ' +
+    'A ready-to-use dry concrete for structural repairs. Add 2 to 3 litres ' +
     'of water to the bag, depending on how fluid you need it, and you have a ' +
     'C30/37 mix without batching aggregates and cement yourself.',
 } as const;
@@ -64,7 +64,10 @@ export const mixing = [
   'Mix the content of the bag with 2 to 3 litres of clean water.',
   'Use a mechanical mixer until the mix is homogenous.',
   'Apply by trowel or by casting, depending on the application.',
-  'Work within about 2H at +20°C, the pot life of the mix.',
+  /* 30 minutes, the pot life printed on the bag. Not to be confused with the
+     setting time, which is ~2 hours and lives in the technical characteristics
+     below. The two are different properties. */
+  'Work within about 30 minutes at +20°C, the pot life of the mix.',
 ];
 
 export const dosage = {
@@ -88,17 +91,45 @@ export const dosage = {
       consistency: 'Very fluid',
       suits: 'Pumpable, heavily reinforced sections, walls',
     },
+    {
+      workability: 'S5',
+      slump: '≥ 22 cm',
+      bag: '25 kg',
+      water: '3 L',
+      strength: '52 MPa',
+      consistency: 'Very soft / flowing',
+      suits: 'Self-levelling, densely reinforced sections, restricted access, thin walls',
+    },
   ],
 };
 
 export const specs = [
-  { label: 'Compressive strength, 28 days', value: '≥ 30 MPa' },
+  { label: 'Compressive strength, 28 days', value: '≥ 55 MPa' },
   { label: 'Category',                      value: 'R3 / EN 1504-3' },
-  { label: 'Application thickness',         value: '25-100 mm' },
+  { label: 'Application thickness',         value: '20-120 mm' },
   { label: 'Setting time at +20°C',         value: '~ 2 hours' },
   { label: 'Yield',                         value: '~ 0.012 m³ per bag' },
   { label: 'Application temperature',       value: '+5°C to +35°C' },
   { label: 'Declaration of performance',    value: 'R3-C25, EN 206 compliant' },
+];
+
+/*
+ * Laboratory results, each against the standard it was measured under. Kept
+ * apart from `specs` above: those are the declared characteristics printed on
+ * the bag, these are measured values, and the third column is the reason the
+ * two cannot share a table. A dash means the figure carries no test standard.
+ */
+export const labCharacteristics = [
+  { property: 'Max aggregate size',              value: '8 mm',                    standard: '—' },
+  { property: 'Compressive strength (1 day)',    value: '28.2 MPa',                standard: 'EN 12190' },
+  { property: 'Compressive strength (28 days)',  value: '60.5 MPa',                standard: 'EN 12190' },
+  { property: 'Flexural strength (28 days)',     value: '8.15 MPa',                standard: 'EN 12190' },
+  { property: 'Capillary absorption',            value: '0.027 kg·m⁻²·h⁻⁰·⁵',      standard: 'EN 13057' },
+  { property: 'Chloride penetration (28 d)',     value: '229 C',                   standard: 'ASTM C1202' },
+  { property: 'Concrete class',                  value: 'C30/37 – C45/55',         standard: 'EN 206 / EN 14487-1' },
+  { property: 'Pull off',                        value: '2.14 MPa',                standard: 'EN 1542' },
+  { property: 'Lower CO₂',                      value: '~40% vs I 42.5 mix',      standard: '—' },
+  { property: 'Yield',                           value: '~85 bags / m³',           standard: '—' },
 ];
 
 export const downloads = [
