@@ -465,7 +465,25 @@ td .muted { color: var(--gray-650); font-size: 14px; }
 }
 
 .specs dt { color: var(--gray-650); }
-.specs dd { margin: 0; font-family: var(--mono); font-weight: 600; color: var(--navy); }
+.specs dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--navy);
+  text-align: right;
+}
+
+/* The test standard, under the value it belongs to. Sans and lighter, so the
+   number stays the thing you read first. */
+.specs dd small {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--gray-650);
+  letter-spacing: 0.01em;
+}
 
 /* ---------------------------------------------------------------- gallery */
 

@@ -69,31 +69,24 @@ const Specs = () => (
         </dl>
       </div>
 
-      {/* A table rather than the definition list above, because each figure
-          carries the standard it was measured under, and that third column is
-          what separates a measured result from a declared characteristic. */}
+      {/* Same definition list as the technical characteristics above, so the two
+          read as one system rather than two. The standard each figure was
+          measured under sits under the value as a second line: it is real
+          information, but secondary to the number, and it does not deserve a
+          column of its own when three of the ten rows have none. */}
       <div style={{ marginTop: 'clamp(40px, 6vw, 72px)' }}>
         <Eyebrow>Lab characteristics</Eyebrow>
-        <div className="tablewrap" style={{ marginTop: 24 }}>
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Property</th>
-                <th scope="col">Value</th>
-                <th scope="col">Standard</th>
-              </tr>
-            </thead>
-            <tbody>
-              {labCharacteristics.map((row) => (
-                <tr key={row.property}>
-                  <th scope="row">{row.property}</th>
-                  <td className="data">{row.value}</td>
-                  <td className="muted">{row.standard}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <dl className="specs">
+          {labCharacteristics.map((row) => (
+            <div key={row.property}>
+              <dt>{row.property}</dt>
+              <dd>
+                {row.value}
+                {row.standard !== '—' && <small>{row.standard}</small>}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </div>
   </section>
