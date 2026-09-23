@@ -24,7 +24,7 @@ const Faq = () => {
       <div className="wrap">
         <div className="section__head">
           <Eyebrow>Questions</Eyebrow>
-          <h2>What people ask before they specify it</h2>
+          <h2>What people ask before they choose it</h2>
         </div>
 
         <div className="faq">

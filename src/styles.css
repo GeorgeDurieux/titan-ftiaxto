@@ -487,10 +487,29 @@ td .muted { color: var(--gray-650); font-size: 14px; }
 
 /* ---------------------------------------------------------------- gallery */
 
+/*
+| Below 900px the column count is left to `auto-fit`, which is right while the
+| width is unpredictable: it fits as many 240px tracks as there is room for.
+|
+| Above it the count is fixed at three, because the content is nine pictures and
+| auto-fit would choose four. Four columns of a nine-item set leaves a row of
+| one, and it separates the spalled beam from the finished cast, which are a
+| before and an after and only work side by side. Three divides nine exactly and
+| puts that pair in the same row.
+|
+| The taller box on desktop follows from the wider track: at 1140px three columns
+| are 366px each, and holding the 260px height there would make a 1.4:1 letterbox
+| that crops the portrait shots hard.
+*/
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: clamp(12px, 2vw, 20px);
+}
+
+@media (min-width: 900px) {
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+  .shot img { height: 300px; }
 }
 
 .shot {
