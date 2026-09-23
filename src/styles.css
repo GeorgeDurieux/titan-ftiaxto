@@ -501,7 +501,19 @@ td .muted { color: var(--gray-650); font-size: 14px; }
   background: #fff;
 }
 
+/*
+| Every tile is the same 260px box. What differs is how the picture sits in it.
+|
+| `contain` is right for the two packaging renders: they are cutouts on white,
+| so letterboxing is invisible and cropping would clip the bag.
+|
+| The photographs need `cover`. They are phone frames in portrait and landscape,
+| and one is 631x1400 — under `contain` that becomes a 117px sliver adrift in a
+| white box, which reads as a broken image rather than a tall one. Filling the
+| frame costs the edges and keeps the grid legible.
+*/
 .shot img { width: 100%; height: 260px; object-fit: contain; background: #fff; }
+.shot--photo img { object-fit: cover; }
 
 .shot figcaption {
   padding: 12px 14px;
@@ -556,6 +568,83 @@ td .muted { color: var(--gray-650); font-size: 14px; }
 
 .doc__title { flex: 1 1 auto; font-weight: 600; color: var(--navy); }
 .doc__hint { flex: 0 0 auto; font-size: 13px; color: var(--gray-400); }
+
+/* -------------------------------------------------------------------- faq */
+
+/*
+| Borrows the downloads panel's shape, one border and one hover tint, so the
+| two lists near the foot of the page read as the same kind of thing.
+|
+| The rows share borders instead of each carrying their own: a stack of ten
+| separate 6px boxes reads as ten objects, and this is one list.
+*/
+.faq {
+  border: 1px solid var(--gray-150);
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.faq__item + .faq__item { border-top: 1px solid var(--gray-150); }
+
+/* The heading carries the semantics; the button inside it does the work, so the
+   heading itself must not add any box of its own. */
+.faq__q { margin: 0; font-size: inherit; font-weight: inherit; }
+
+.faq__trigger {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 16px 18px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--navy);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.faq__trigger:hover { background: var(--navy-wash); }
+.is-open .faq__trigger { background: var(--navy-wash); }
+
+/* Inset so the ring does not sit half under the neighbouring row's border. */
+.faq__trigger:focus-visible { outline-offset: -3px; }
+
+.faq__text { flex: 1 1 auto; }
+
+/* A plus that becomes a minus. Two bars, and the upright one is hidden when the
+   row opens — cheaper than a glyph and it never picks up a font fallback. */
+.faq__sign {
+  position: relative;
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+}
+
+.faq__sign::before,
+.faq__sign::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--green);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.faq__sign::after { transform: rotate(90deg); }
+.is-open .faq__sign::after { transform: rotate(0deg); opacity: 0; }
+
+.faq__a { padding: 0 18px 18px; }
+
+.faq__a p {
+  margin: 0;
+  max-width: 68ch;
+  color: var(--navy-ink);
+}
 
 /* ----------------------------------------------------------------- safety */
 

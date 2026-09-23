@@ -139,6 +139,54 @@ export const downloads = [
   { title: 'Product brochure',           code: 'Brochure', file: 'ftiaxto-brochure.pdf' },
 ];
 
+/*
+ * Supplied by the client as Greek Q&A and translated for this page, which is
+ * entirely in English. Technical vocabulary is left exactly as written — R3,
+ * repair mortar, ready-mix, pull-off — because those are the words the trade
+ * uses in both languages and translating them would lose the meaning rather
+ * than carry it.
+ *
+ * The source numbered these 1, 2, 5, 11 and 12 out of a longer internal list.
+ * The numbers are dropped: gaps on a public page read as missing content.
+ */
+export const faq = [
+  {
+    // CHECK BEFORE PUBLISHING. The Greek source says 20-150 mm; `specs` above
+    // says 20-120 mm, taken from the packaging artwork. One of the two is wrong
+    // and this page would state both. The artwork number is used here because it
+    // is the one already printed on the bag, but the client has to settle it.
+    q: 'Why not just use an R3 mortar?',
+    a: 'FTIAXTO covers applications that are too large for a typical repair ' +
+       'mortar and too small for ready-mix concrete. It also gives you a ' +
+       '20 to 120 mm application range in a single product.',
+  },
+  {
+    q: 'What sets it apart?',
+    a: 'One product and one mix, for both small pours and repairs. That ' +
+       'reduces complexity on site and simplifies choosing a material.',
+  },
+  {
+    q: 'Has the performance been proven?',
+    a: 'It reached 60.5 MPa compressive strength with high durability and a ' +
+       'reduced environmental footprint, and it has been tested in real field ' +
+       'applications. Laboratory testing covered flexural strength, pull-off ' +
+       'bond strength, and resistance to chloride penetration and carbonation.',
+  },
+  {
+    q: 'Why switch from the repair mortars already in use?',
+    a: 'FTIAXTO combines the simplicity of a repair mortar with the ' +
+       'performance of concrete, covering both repairs and small-volume ' +
+       'concrete work with a single product.',
+  },
+  {
+    q: 'Why R3 and not R4?',
+    a: 'It was designed for a different need: the gap between repair mortars ' +
+       'and ready-mix concrete. Its value is castable structural repair ' +
+       'concrete in a 25 kg bag, for jobs where a repair mortar is not enough ' +
+       'and ready-mix is not practical.',
+  },
+];
+
 /** Verbatim from the bag. Do not soften. */
 export const safety = [
   'Contains cement. Causes skin irritation.',
