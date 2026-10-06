@@ -13,23 +13,21 @@ const Downloads = () => (
         <Eyebrow>Documents</Eyebrow>
         <h2>Download the relevant documents</h2>
         <p className="lede">
-          Placeholders for now. Each link opens a one-page PDF naming the
-          document that belongs there.
+          These documents are being finalised and will be available here soon.
         </p>
       </div>
 
       <div className="docs">
         {downloads.map((d) => (
-          <a
+          <div
             key={d.file}
-            className="doc"
-            href={`/downloads/${d.file}`}
-            download
+            className="doc doc--pending"
+            aria-disabled="true"
           >
             <span className="doc__code">{d.code}</span>
             <span className="doc__title">{d.title}</span>
-            <span className="doc__hint">PDF, placeholder</span>
-          </a>
+            <span className="doc__hint">Pending...</span>
+          </div>
         ))}
       </div>
     </div>

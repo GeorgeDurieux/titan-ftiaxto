@@ -541,6 +541,74 @@ td .muted { color: var(--gray-650); font-size: 14px; }
   color: var(--gray-650);
 }
 
+.gallery-video {
+  margin: clamp(12px, 2vw, 20px) 0 0;
+  border: 1px solid var(--gray-150);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.video-frame { position: relative; display: block; }
+
+.gallery-video video {
+  display: block;
+  width: 100%;
+  max-height: 70vh;
+  background: #000;
+}
+
+/* Make it unmistakably a video: a corner badge and a large central play
+   button over the poster. Both disappear once it is playing. */
+.video-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.video-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 96px;
+  height: 96px;
+  display: grid;
+  place-items: center;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: rgba(22, 42, 117, 0.88);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.video-play:hover { transform: scale(1.06); background: var(--navy); }
+
+.video-play svg { width: 40px; height: 40px; margin-left: 5px; fill: #fff; }
+
+.video-frame.is-playing .video-play,
+.video-frame.is-playing .video-badge { display: none; }
+
+.gallery-video figcaption {
+  padding: 12px 14px;
+  border-top: 1px solid var(--gray-150);
+  font-size: 14px;
+  color: var(--gray-650);
+}
+
 .shot--todo {
   display: grid;
   place-items: center;
@@ -571,7 +639,10 @@ td .muted { color: var(--gray-650); font-size: 14px; }
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-.doc:hover { border-color: var(--navy); background: var(--navy-wash); }
+.doc:not(.doc--pending):hover { border-color: var(--navy); background: var(--navy-wash); }
+
+/* Placeholder documents: shown but not yet available, so not a link. */
+.doc--pending { cursor: default; opacity: 0.6; }
 
 .doc__code {
   flex: 0 0 auto;

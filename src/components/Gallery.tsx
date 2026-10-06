@@ -7,6 +7,7 @@ import formwork from '../assets/img/formwork.jpg';
 import castWall from '../assets/img/cast-wall.jpg';
 import finishedBeam from '../assets/img/finished-beam.jpg';
 import labCarbonation from '../assets/img/lab-carbonation.jpg';
+import { useRef, useState } from 'react';
 import Eyebrow from './Eyebrow';
 
 /*
@@ -41,24 +42,61 @@ const shots = [
   { src: finishedBeam,    photo: true,  caption: 'The finished cast' },
 ];
 
-const Gallery = () => (
-  <section className="section" id="gallery">
-    <div className="wrap">
-      <div className="section__head">
-        <Eyebrow>The product</Eyebrow>
-        <h2>Bag, pallet, and the job itself</h2>
-      </div>
+const Gallery = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
 
-      <div className="gallery">
-        {shots.map((s) => (
-          <figure className={`shot${s.photo ? ' shot--photo' : ''}`} key={s.src}>
-            <img src={s.src} alt={s.caption} loading="lazy" />
-            <figcaption>{s.caption}</figcaption>
-          </figure>
-        ))}
+  return (
+    <section className="section" id="gallery">
+      <div className="wrap">
+        <div className="section__head">
+          <Eyebrow>The product</Eyebrow>
+          <h2>Bag, pallet, and the job itself</h2>
+        </div>
+
+        <div className="gallery">
+          {shots.map((s) => (
+            <figure className={`shot${s.photo ? ' shot--photo' : ''}`} key={s.src}>
+              <img src={s.src} alt={s.caption} loading="lazy" />
+              <figcaption>{s.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+
+        {/* The product video sits under the stills. `preload="none"` keeps the
+            30 MB file off the initial load; the poster is a frame from the video
+            itself (public/video), so the preview matches what plays. The play
+            overlay and badge make clear it is a video, not a still, and vanish
+            once it is playing. */}
+        <figure className="gallery-video">
+          <div className={`video-frame${playing ? ' is-playing' : ''}`}>
+            <video
+              ref={videoRef}
+              controls
+              preload="none"
+              playsInline
+              poster="/video/ftiaxto-poster.jpg"
+              src="/video/ftiaxto.mp4"
+              onPlay={() => setPlaying(true)}
+              onPause={() => setPlaying(false)}
+              onEnded={() => setPlaying(false)}
+            />
+            <span className="video-badge">▶ Video</span>
+            <button
+              type="button"
+              className="video-play"
+              aria-label="Play product video"
+              onClick={() => videoRef.current?.play()}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+          </div>
+        </figure>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Gallery;
