@@ -127,7 +127,7 @@ export const labCharacteristics = [
   { property: 'Capillary absorption',            value: '0.027 kg·m⁻²·h⁻⁰·⁵',      standard: 'EN 13057' },
   { property: 'Chloride penetration (28 d)',     value: '229 C',                   standard: 'ASTM C1202' },
   { property: 'Concrete class',                  value: 'C30/37 – C45/55',         standard: 'EN 206 / EN 14487-1' },
-  { property: 'Pull off',                        value: '2.14 MPa',                standard: 'EN 1542' },
+  { property: 'Pull off',                        value: '2.65 MPa',                standard: 'EN 1542' },
   { property: 'Lower CO₂',                      value: '~40% vs I 42.5 mix',      standard: '—' },
   { property: 'Yield',                           value: '~85 bags / m³',           standard: '—' },
 ];
